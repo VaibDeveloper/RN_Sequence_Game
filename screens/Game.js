@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   TextInput,
 } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import questions from "../components/Questions";
 //import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -16,16 +16,109 @@ import questions from "../components/Questions";
 const Quiz = ({ navigation }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const currentQuestion = questions[currentQuestionIndex];
+  const [visible, setVisible] = useState(true);
+  console.log(visible);
   console.log(currentQuestionIndex);
 
   const handleAnswerButtonClick = () => {
     if (currentQuestionIndex < 4) {
+      setVisible(true);
       setCurrentQuestionIndex(currentQuestionIndex + 1);
+      <QuestionsInput />;
     }
 
     if (currentQuestionIndex == 4) {
       navigation.navigate("Result");
     }
+  };
+  const AnswersInput = () => {
+    useEffect(() => {
+      const timeout = setTimeout(() => {
+        setVisible(false);
+      }, 5000);
+
+      return () => clearTimeout(timeout);
+    });
+
+    return !visible ? (
+      <View style={styles.container}>
+        <Text style={styles.heading2}>FILL THE BLOCKS</Text>
+        <View style={styles.answer_view}>
+          <TextInput
+            ref={ip1}
+            style={styles.answer_input}
+            maxLength={1}
+            inputMode="text"
+            onChangeText={(txt) => {
+              if (txt.length >= 1) {
+                ip2.current.focus();
+              }
+            }}
+          />
+          <TextInput
+            ref={ip2}
+            style={styles.answer_input}
+            maxLength={1}
+            inputMode="text"
+            onChangeText={(txt) => {
+              if (txt.length >= 1) {
+                ip3.current.focus();
+              }
+            }}
+          />
+          <TextInput
+            ref={ip3}
+            style={styles.answer_input}
+            maxLength={1}
+            inputMode="text"
+            onChangeText={(txt) => {
+              if (txt.length >= 1) {
+                ip4.current.focus();
+              }
+            }}
+          />
+          <TextInput
+            ref={ip4}
+            style={styles.answer_input}
+            maxLength={1}
+            inputMode="text"
+            onChangeText={(txt) => {
+              if (txt.length >= 1) {
+                ip4.current.focus();
+              }
+            }}
+          />
+        </View>
+        <TouchableOpacity
+          style={styles.button_skip}
+          onPress={handleAnswerButtonClick}
+        >
+          <Text style={styles.buttonText}>Submit</Text>
+        </TouchableOpacity>
+      </View>
+    ) : null;
+  };
+
+  const QuestionsInput = () => {
+    useEffect(() => {
+      const timeout = setTimeout(() => {
+        setVisible(false);
+      }, 5000);
+
+      return () => clearTimeout(timeout);
+    });
+
+    return visible ? (
+      <View style={styles.container}>
+        <Text style={styles.heading}>REMEMBER THE SEQUENCE</Text>
+        <View style={styles.row}>
+          <Text style={styles.question}>{currentQuestion.Alphabets[0]}</Text>
+          <Text style={styles.question}>{currentQuestion.Alphabets[1]}</Text>
+          <Text style={styles.question}>{currentQuestion.Alphabets[2]}</Text>
+          <Text style={styles.question}>{currentQuestion.Alphabets[3]}</Text>
+        </View>
+      </View>
+    ) : null;
   };
 
   const ip1 = useRef();
@@ -35,66 +128,8 @@ const Quiz = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>REMEMBER THE SEQUENCE</Text>
-      <View style={styles.row}>
-        <Text style={styles.question}>{currentQuestion.Alphabets[0]}</Text>
-        <Text style={styles.question}>{currentQuestion.Alphabets[1]}</Text>
-        <Text style={styles.question}>{currentQuestion.Alphabets[2]}</Text>
-        <Text style={styles.question}>{currentQuestion.Alphabets[3]}</Text>
-      </View>
-      <Text style={styles.heading2}>FILL THE BLOCKS</Text>
-      <View ref={ip1} style={styles.answer_view}>
-        <TextInput
-          style={styles.answer_input}
-          maxLength={1}
-          inputMode="text"
-          onChangeText={(txt) => {
-            if (txt.length >= 1) {
-              ip2.current.focus();
-            }
-          }}
-        />
-        <TextInput
-          ref={ip2}
-          style={styles.answer_input}
-          maxLength={1}
-          inputMode="text"
-          onChangeText={(txt) => {
-            if (txt.length >= 1) {
-              ip3.current.focus();
-            }
-          }}
-        />
-        <TextInput
-          ref={ip3}
-          style={styles.answer_input}
-          maxLength={1}
-          inputMode="text"
-          onChangeText={(txt) => {
-            if (txt.length >= 1) {
-              ip4.current.focus();
-            }
-          }}
-        />
-        <TextInput
-          ref={ip4}
-          style={styles.answer_input}
-          maxLength={1}
-          inputMode="text"
-          onChangeText={(txt) => {
-            if (txt.length >= 1) {
-              ip4.current.focus();
-            }
-          }}
-        />
-      </View>
-
-      <TouchableOpacity
-        style={styles.button_skip}
-        onPress={handleAnswerButtonClick}
-      >
-        <Text style={styles.buttonText}>Submit</Text>
-      </TouchableOpacity>
+      <QuestionsInput />
+      <AnswersInput />
     </View>
   );
 };

@@ -1,6 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import Home from "../screens/Home";
+import Menu from "../screens/Menu";
 import Game from "../screens/Game";
 import Result from "../screens/Result";
 
@@ -10,8 +10,8 @@ function MyStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Home"
-        component={Home}
+        name="Menu"
+        component={Menu}
         options={{ headerShown: false }}
       />
       <Stack.Screen

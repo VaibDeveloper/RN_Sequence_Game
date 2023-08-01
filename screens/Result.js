@@ -5,7 +5,7 @@ import questions from "../components/Questions";
 
 // create a component
 const Result = ({ navigation, route }) => {
-  //const { Score } = route.params;
+  const { Score, Level_No} = route.params;
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Result</Text>
@@ -14,7 +14,9 @@ const Result = ({ navigation, route }) => {
         source={require("../assets/images/Result.png")}
         resizeMode="contain"
       ></Image>
-      <Text style={styles.score}>Your Score is : X/{questions.length}</Text>
+      <Text style={styles.score}>
+        Your Score is : {Score}/{questions[Level_No].length}
+      </Text>
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate("Home")}
